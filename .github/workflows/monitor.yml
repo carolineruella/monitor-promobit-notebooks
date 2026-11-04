@@ -1,0 +1,44 @@
+name: Monitor Promobit Telegram
+
+on:
+  schedule:
+    # Executa a cada 30 minutos automaticamente
+    - cron: '*/30 * * * *'
+  # Permite disparar manualmente pelo painel do GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-monitor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Ambiente Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Instalar Dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Executar Scraper e Notificar
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python monitor_promobit.py
+
+      - name: Salvar Cache de Ofertas Vistas
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add seen_deals.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: atualizar cache de ofertas [skip ci]" && git push)
