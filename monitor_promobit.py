@@ -64,8 +64,10 @@ class PromobitMonitor:
 
         self.target_models = [
             r"zenbook",
-            r"galaxy book4 pro",
-            r"galaxy book 4 pro",
+            r"galaxy book4",      # Captura tanto o Book4 padrão quanto o Book4 Pro
+            r"galaxy book 4",
+            r"ideapad slim",      # Adicionado: linha custo-benefício Lenovo
+            r"vivobook",          # Adicionado: linha custo-benefício ASUS
             r"yoga slim",
             r"yoga 7",
             r"thinkpad",
