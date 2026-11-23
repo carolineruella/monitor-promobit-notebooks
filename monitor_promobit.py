@@ -80,7 +80,6 @@ class PromobitMonitor:
         ]
 
         self.target_models = [  
-            r"notebook",  # <-- TERMO GENÉRICO DE TESTE (remova após validar no Telegram)
             r"zenbook",
             r"galaxy book4",
             r"galaxy book 4",
