@@ -5,6 +5,8 @@ import re
 from typing import List, Set
 from bs4 import BeautifulSoup
 import requests
+import html  
+
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
@@ -17,9 +19,6 @@ class NotebookDeal:
     price: float
     url: str
     matched_reasons: List[str]
-
-
-import html  # <-- Adicione esse import no topo do arquivo
 
 def send_telegram(deal: NotebookDeal) -> bool:
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
